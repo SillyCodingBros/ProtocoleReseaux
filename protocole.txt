@@ -40,18 +40,6 @@ Méthode syncro
 Méthode envoi aux non hors-ligne
 *******************************
 
-
-Tags attribués :
-	tags :
-		1 : channel général : là où tout le monde est.
-	id messages :
-		1 : IAM
-		2 : ADD
-		3 : UPD
-		4 : MSG
-		5 : INV
-		6 : CO
-Avec un id UPD en mettant tag_chan = own_tag, on récupère sa liste d'amis.
 Les tags channels sont identifiés par leur premier bit commençant par 0 (sujet a changement)
 
 A ajouter :
