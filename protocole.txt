@@ -28,8 +28,9 @@ qu'avec des pseudos dont la taille change selon l'user
 
 	S -> C : TIC
 	C -> S : TOC
-	
+
 	S -> C : ERR message
+
 	C -> S : JEU id_jeu protocole_jeu
 	S -> C : JEU id_jeu protocole_jeu
 
