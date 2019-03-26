@@ -36,12 +36,6 @@ qu'avec des pseudos dont la taille change selon l'user
 
 *******************************
 ARRIVAGE DE GENS
-PINGAGE DU POPULO
-*******************************
-
-*******************************
-Nb DE SOCKETS / GESTION de SURCHARGE
-SOCKET dédié ?
 *******************************
 
 *******************************
