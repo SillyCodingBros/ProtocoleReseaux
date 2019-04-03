@@ -23,7 +23,7 @@ qu'avec des pseudos dont la taille change selon l'user
 	C -> S : PSW password new_password
 	S -> C : PSW new_password
 
-	C -> S : PSD password pseudo new_pseudo
+	C -> S : PSD pseudo password new_pseudo
 	S -> C : PSD new_pseudo
 
 	S -> C : TIC
@@ -33,6 +33,9 @@ qu'avec des pseudos dont la taille change selon l'user
 
 	C -> S : JEU id_jeu protocole_jeu
 	S -> C : JEU id_jeu protocole_jeu
+
+	C -> S : EXT
+	
 
 *******************************
 ARRIVAGE DE GENS
