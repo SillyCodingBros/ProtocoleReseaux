@@ -47,6 +47,9 @@ qu'avec des pseudos dont la taille change selon l'user
 	S -> C : ERR message
 		/* signal une erreur */
 
+	S -> S : EXT
+		/* arrêter le serveur */
+
 	C -> S : JEU id_jeu protocole_jeu
 	S -> C : JEU id_jeu protocole_jeu
 		/* implémentation de jeu */
