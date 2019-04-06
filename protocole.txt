@@ -3,6 +3,16 @@ Pourquoi des tags pour identifier : un user peut changer de nom sans problèmes,
 c'est aussi plus simple de communiquer avec des tailles fixes plutôt
 qu'avec des pseudos dont la taille change selon l'user
 
+§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+RÈGLES À SUIVRE POUR LA CRÉATION DE TAG
+
+tag_chan	: multiple de 10 - 250, 30, ...
+tag_usr 	: non multiple de 10 - 32, 5037, 1, ...
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+
 	/* création d'un nouveau compte/channel */
 	C -> S : NEW pseudo password
 	C -> S : NEW chan_name
