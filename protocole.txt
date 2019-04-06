@@ -7,35 +7,41 @@ qu'avec des pseudos dont la taille change selon l'user
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 RÈGLES À SUIVRE POUR LA CRÉATION DE TAG
 
-tag_srv.tag_chan	: 15.250, 3.30, 1.1, ...
+tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
 0.tag_usr 	: 0.32, 0.5037, 0.1, ...
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 
-	/* création d'un nouveau compte/channel */
+	/* création d'un nouveau compte/channel/serveur */
 	C -> S : NEW pseudo password
-	C -> S : NEW chan_name
+	C -> S : NEW tag_server chan_name
+	C -> S : NEW server_name
 
 	/* connexion à un compte */
 	C -> S : IAM pseudo password
 
-	/* réponse à une connexion/création par le tag du client/channel */
+	/* réponse à une connexion/création par le tag du client/channel/serveur */
 	S -> C : UAR 0.tag_usr
 	S -> C : UAR tag_server.tag_chan
+	S -> C : UAR tag_server
 
 	/* informer tout les connectés de l'arrivé de pseudo/tag_usr */
 	/* envoyer à l'arrivant les associations pseudo/tag_usr des connectés */
 	S -> C : ADD 0.tag_usr pseudo
 
-	/* informer le créateur du tag_chan créer */
+	/* informer le créateur du tag_chan/tag_server créé */
 	S -> C : ADD tag_server.tag_chan chan_name
+	S -> C : ADD tag_server server_name
 
-	/* informer tout le monde que $(tag) est déconnecté */
+	/* informer tout le monde que $(tag) est déconnecté/supprimé */
 	S -> C : BYE 0.tag_usr
+	S -> C : BYE tag_server.tag_chan
+	S -> C : BYE tag_server
 
-	/* le créateur du channel le supprime */
+	/* le créateur du channel/server le supprime */
 	C -> S : BYE tag_server.tag_chan
+	C -> S : BYE tag_server
 
 	/* se déconnecter */
 	C -> S : BYE
@@ -79,11 +85,13 @@ tag_srv.tag_chan	: 15.250, 3.30, 1.1, ...
 	/* notification à tous du changement de pseudo */
 	S -> C : PSD 0.tag_usr new_pseudo
 
-	/* changer le nom d'un channel par créateur uniquement */
+	/* changer le nom d'un channel/serveur par créateur uniquement */
 	C -> S : RENAME tag_server.tag_chan new_name
+	C -> S : RENAME tag_server new_name
 
-	/* notification à tous les membres du changement de nom */
+	/* notification à tous les membres du changement de nom d'un channel/serveur */
 	S -> C : RENAME tag_server.tag_chan new_name
+	S -> C : RENAME tag_server new_name
 
 	/* test de présence toute les 30 sec */
 	S -> C : TIC
