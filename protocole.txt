@@ -8,7 +8,7 @@ qu'avec des pseudos dont la taille change selon l'user
 	C -> S : IAM pseudo password
 		/* récupérer un compte */
 	S -> C : UAR tag
-		/* me souviens plus */
+		/* réponse de l'identification par le tag du client */
 
 	S -> C : ADD tag pseudo
 		/* informer tout le monde que $(pseudo) associer a $(tag) existe */
