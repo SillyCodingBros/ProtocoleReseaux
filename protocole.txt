@@ -13,9 +13,10 @@ tag_usr 	: non multiple de 10 - 32, 5037, 1, ...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 
-	/* création d'un nouveau compte/channel */
+	/* création d'un nouveau compte/channel/serveur */
 	C -> S : NEW pseudo password
-	C -> S : NEW chan_name
+	C -> S : NEW tag_server.chan_name
+	C -> S : NEW tag_server.0
 
 	/* connexion à un compte */
 	C -> S : IAM pseudo password
