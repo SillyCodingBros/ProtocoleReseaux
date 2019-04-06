@@ -21,53 +21,53 @@ tag_usr 	: non multiple de 10 - 32, 5037, 1, ...
 	C -> S : IAM pseudo password
 
 	/* réponse à une connexion/création par le tag du client/channel */
-	S -> C : UAR tag_usr
-	S -> C : UAR tag_chan
+	S -> C : UAR 0.tag_usr
+	S -> C : UAR tag_server.tag_chan
 
 	/* informer tout les connectés de l'arrivé de pseudo/tag_usr */
 	/* envoyer à l'arrivant les associations pseudo/tag_usr des connectés */
-	S -> C : ADD tag_usr pseudo
+	S -> C : ADD 0.tag_usr pseudo
 
 	/* informer le créateur du tag_chan créer */
-	S -> C : ADD tag_chan chan_name
+	S -> C : ADD tag_server.tag_chan chan_name
 
 	/* informer tout le monde que $(tag) est déconnecté */
-	S -> C : BYE tag_usr
+	S -> C : BYE 0.tag_usr
 
 	/* le créateur du channel le supprime */
-	C -> S : BYE tag_chan
+	C -> S : BYE tag_server.tag_chan
 
 	/* se déconnecter */
 	C -> S : BYE
 
 	/* envoi la liste d'ami du compte associé au premier tag_usr */
-	S -> C : GRP tag_usr tag_usr tag_usr tag_usr ...
+	S -> C : GRP 0.tag_usr 0.tag_usr 0.tag_usr 0.tag_usr ...
 
 	/* envoi la liste des membres du channel associé au premier tag_chan */
-	S -> C : GRP tag_chan tag_usr tag_usr tag_usr ...
+	S -> C : GRP tag_server.tag_chan 0.tag_usr 0.tag_usr 0.tag_usr ...
 
 	/* envoyer un message à une personne/channel */
-	C -> S : MSG tag_usr_dest message
-	C -> S : MSG tag_chan_dest message
+	C -> S : MSG 0.tag_usr_dest message
+	C -> S : MSG tag_server.tag_chan_dest message
 
 	/* recevoir un message d'une personne/channel */
-	S -> C : MSG tag_usr_src message
-	S -> C : MSG tag_chan_src message
+	S -> C : MSG 0.tag_usr_src message
+	S -> C : MSG tag_server.tag_chan_src message
 
 	/* envoi demande d'ami / invitation à un channel */
-	C -> S : INV tag_chan tag_usr_dest
-	C -> S : INV tag_usr_src tag_usr_dest
+	C -> S : INV tag_server.tag_chan 0.tag_usr_dest
+	C -> S : INV 0.tag_usr_src 0.tag_usr_dest
 
 	/* réception demande d'ami / invitation à un channel */
-	S -> C : INV tag_chan nom_chan tag_usr_src
-	S -> C : INV tag_usr_src
+	S -> C : INV tag_server.tag_chan nom_chan 0.tag_usr_src
+	S -> C : INV 0.tag_usr_src
 
 	/* accepter l'invitation channel/ami */
-	C -> S : JOIN tag_chan
-	C -> S : JOIN tag_urs_src
+	C -> S : JOIN tag_server.tag_chan
+	C -> S : JOIN 0.tag_urs_src
 
 	/* notification de l'arrivé d'un nouveau membre dans le channel */
-	S -> C : JOIN tag_usr_dest
+	S -> C : JOIN 0.tag_usr_dest
 
 	/* changer de mot de passe */
 	C -> S : PSW password new_password
@@ -77,13 +77,13 @@ tag_usr 	: non multiple de 10 - 32, 5037, 1, ...
 	C -> S : PSD password new_pseudo
 
 	/* notification à tous du changement de pseudo */
-	S -> C : PSD tag_usr new_pseudo
+	S -> C : PSD 0.tag_usr new_pseudo
 
 	/* changer le nom d'un channel par créateur uniquement */
-	C -> S : RENAME tag_chan new_name
+	C -> S : RENAME tag_server.tag_chan new_name
 
 	/* notification à tous les membres du changement de nom */
-	S -> C : RENAME tag_chan new_name
+	S -> C : RENAME tag_server.tag_chan new_name
 
 	/* test de présence toute les 30 sec */
 	S -> C : TIC
