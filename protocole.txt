@@ -4,38 +4,52 @@ c'est aussi plus simple de communiquer avec des tailles fixes plutôt
 qu'avec des pseudos dont la taille change selon l'user
 
 	C -> S : NEW pseudo password
+		/* créer un nouveau compte */
 	C -> S : IAM pseudo password
+		/* récupérer un compte */
 	S -> C : UAR tag
+		/* me souviens plus */
 
 	S -> C : ADD tag pseudo
-	S -> C : BYE tag pseudo
+		/* informer tout le monde que $(pseudo) associer a $(tag) existe */
+	S -> C : BYE tag
+		/* informer tout le monde que $(tag) est déconnecter */
+	C -> S : BYE
+		/* se déconnecter */
 
 	S -> C : GRP tag_chan tag tag tag ... ect
+		/* recup les different groupe exemple channel ,ami */
 
 	C -> S : MSG tag_dest message
 	S -> C : MSG tag_src message
+		/* envoyer des messages */
 
 	C -> S : INV tag_chan tag_dest
 	S -> C : INV tag_chan nom_chan
+		/* inviter quelqu'un a rejoindre un groupe exemple channel ,ami */
 
 	C -> S : JON tag_chan
 	S -> C : JON tag_chan
+		/* accepter l'invitation a rejoindre un groupe exemple channel ,ami */
 
 	C -> S : PSW password new_password
 	S -> C : PSW new_password
+		/* changer mot de passe */
 
 	C -> S : PSD pseudo password new_pseudo
 	S -> C : PSD new_pseudo
+		/* changer de pseudo */
 
 	S -> C : TIC
 	C -> S : TOC
+		/* test de presence toute les 30 sec */
 
 	S -> C : ERR message
+		/* signal une erreur */
 
 	C -> S : JEU id_jeu protocole_jeu
 	S -> C : JEU id_jeu protocole_jeu
-
-	C -> S : EXT
+		/* implementation de jeu */
 
 
 *******************************
