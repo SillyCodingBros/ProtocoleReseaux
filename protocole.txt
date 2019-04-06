@@ -75,7 +75,15 @@ tag_usr 	: non multiple de 10 - 32, 5037, 1, ...
 
 	/* changer de pseudo */
 	C -> S : PSD password new_pseudo
-	S -> C : PSD new_pseudo
+
+	/* notification à tous du changement de pseudo */
+	S -> C : PSD tag_usr new_pseudo
+
+	/* changer le nom d'un channel par créateur uniquement */
+	C -> S : RENAME tag_chan new_name
+
+	/* notification à tous les membres du changement de nom */
+	S -> C : RENAME tag_chan new_name
 
 	/* test de présence toute les 30 sec */
 	S -> C : TIC
