@@ -104,10 +104,12 @@ tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
 	/* arrêter le serveur */
 	S -> S : EXT
 
-	/* transfert de fichier */
-	C -> S : NEWFILE nom_fichier tag_server.tag_dest
+	/* commande pour informer qu'un fichier va être transmit */
+	C -> S : NEWFILE nom_fichier taille_fichier tag_server.tag_dest
+	S -> C : NEWFILE nom_fichier taille_fichier tag_server.tag_dest
+
+	/* commande envoyer les trames du fichier qu'on a dit qu'on enverrais  */
 	C -> S : FILE tag_server.tag_dest taille_envoyer trame_fichier
-	S -> C : NEWFILE nom_fichier tag_server.tag_dest
 	S -> C : FILE tag_server.tag_dest taille_envoyer trame_fichier
 
 	/* implémentation de jeu */
