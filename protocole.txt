@@ -7,9 +7,12 @@ tag sous forme décimale c'est plus simple pour générer et traiter des entiers
 §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 RÈGLES À SUIVRE POUR LA CRÉATION DE TAG
+tag_server > 0
+tag_usr > 0
+tag_server tag_chan=0 : channel général créé avec le serveur
 
-tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
-0.tag_usr 	: 0.32, 0.5037, 0.1, ...
+tag_server tag_chan	: 15 250, 3 30, 1 1, ...
+0 tag_usr 	: 0 32, 0 5037, 0 1, ...
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
@@ -23,76 +26,74 @@ tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
 	C -> S : IAM pseudo password
 
 	/* réponse à une connexion/création par le tag du client/channel/serveur */
-	S -> C : UAR 0.tag_usr
-	S -> C : UAR tag_server.tag_chan
-	S -> C : UAR tag_server
+	S -> C : TAG 0 tag_usr
+	S -> C : TAG tag_server tag_chan
+	S -> C : TAG tag_server
 
 	/* informer tout les connectés de l'arrivé de pseudo/tag_usr */
 	/* envoyer à l'arrivant les associations pseudo/tag_usr des connectés */
-	S -> C : ADD 0.tag_usr pseudo
+	S -> C : ADD 0 tag_usr pseudo
 
 	/* informer le créateur du tag_chan/tag_server créé */
-	S -> C : ADD tag_server.tag_chan chan_name
+	S -> C : ADD tag_server tag_chan chan_name
 	S -> C : ADD tag_server server_name
 
 	/* informer tout le monde que $(tag) est déconnecté/supprimé */
-	S -> C : BYE 0.tag_usr
-	S -> C : BYE tag_server.tag_chan
+	S -> C : BYE 0 tag_usr
+	S -> C : BYE tag_server tag_chan
 	S -> C : BYE tag_server
 
 	/* le créateur du channel/server le supprime */
-	C -> S : BYE tag_server.tag_chan
+	C -> S : BYE tag_server tag_chan
 	C -> S : BYE tag_server
 
 	/* se déconnecter */
 	C -> S : BYE
 
 	/* envoi la liste d'ami du compte associé au premier tag_usr */
-	S -> C : GRP 0.tag_usr 0.tag_usr 0.tag_usr 0.tag_usr ...
+	S -> C : GRP 0 tag_usr 0 tag_usr 0 tag_usr 0 tag_usr ...
 
 	/* envoi la liste des membres du channel associé au premier tag_chan */
-	S -> C : GRP tag_server.tag_chan 0.tag_usr 0.tag_usr 0.tag_usr ...
+	S -> C : GRP tag_server tag_chan 0 tag_usr 0 tag_usr 0 tag_usr ...
 
 	/* envoyer un message à une personne/channel */
-	C -> S : MSG 0.tag_usr_dest message
-	C -> S : MSG tag_server.tag_chan_dest message
+	C -> S : MSG 0 tag_usr_dest message
+	C -> S : MSG tag_server tag_chan_dest message
 
 	/* recevoir un message d'une personne/channel */
-	S -> C : MSG 0.tag_usr_src message
-	S -> C : MSG tag_server.tag_chan_src message
+	S -> C : MSG 0 tag_usr_src message
+	S -> C : MSG tag_server tag_chan_src message
 
 	/* envoi demande d'ami / invitation à un channel */
-	C -> S : INV tag_server.tag_chan 0.tag_usr_dest
-	C -> S : INV 0.tag_usr_src 0.tag_usr_dest
+	C -> S : INV 0 tag_usr_src 0 tag_usr_dest
+	C -> S : INV tag_server tag_chan 0 tag_usr_dest
 
 	/* réception demande d'ami / invitation à un channel */
-	S -> C : INV tag_server.tag_chan nom_chan 0.tag_usr_src
-	S -> C : INV 0.tag_usr_src
+	S -> C : INV 0 tag_usr_src
+	S -> C : INV tag_server tag_chan nom_chan 0 tag_usr_src
 
 	/* accepter l'invitation channel/ami */
-	C -> S : JOIN tag_server.tag_chan
-	C -> S : JOIN 0.tag_urs_src
+	C -> S : JOIN tag_server tag_chan
+	C -> S : JOIN 0 tag_usr_src
 
 	/* notification de l'arrivé d'un nouveau membre dans le channel */
-	S -> C : JOIN 0.tag_usr_dest
+	S -> C : JOIN 0 tag_usr_dest
 
 	/* changer de mot de passe */
 	C -> S : PSW password new_password
 	S -> C : PSW new_password
 
-	/* changer de pseudo */
+	/* changer le pseudo d'un client */
 	C -> S : PSD password new_pseudo
 
-	/* notification à tous du changement de pseudo */
-	S -> C : PSD 0.tag_usr new_pseudo
-
 	/* changer le nom d'un channel/serveur par créateur uniquement */
-	C -> S : RENAME tag_server.tag_chan new_name
+	C -> S : RENAME tag_server tag_chan new_name
 	C -> S : RENAME tag_server new_name
 
-	/* notification à tous les membres du changement de nom d'un channel/serveur */
-	S -> C : RENAME tag_server.tag_chan new_name
+	/* notification à tous les membres du changement de nom d'un channel/serveur/client */
+	S -> C : RENAME tag_server tag_chan new_name
 	S -> C : RENAME tag_server new_name
+	S -> C : RENAME 0 tag_usr new_pseudo
 
 	/* test de présence toute les 30 sec */
 	S -> C : TIC
@@ -105,12 +106,12 @@ tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
 	S -> S : EXT
 
 	/* commande pour informer qu'un fichier va être transmit */
-	C -> S : NEWFILE nom_fichier taille_fichier tag_server.tag_dest
-	S -> C : NEWFILE nom_fichier taille_fichier tag_server.tag_dest
+	C -> S : NEWFILE nom_fichier taille_fichier tag_server tag_dest
+	S -> C : NEWFILE nom_fichier taille_fichier tag_server tag_dest
 
-	/* commande envoyer les trames du fichier qu'on a dit qu'on enverrais  */
-	C -> S : FILE tag_server.tag_dest taille_envoyer trame_fichier
-	S -> C : FILE tag_server.tag_dest taille_envoyer trame_fichier
+	/* commande pour envoyer les trames du fichier qu'on a dit qu'on enverrait  */
+	C -> S : FILE tag_server tag_dest taille_envoyer trame_fichier
+	S -> C : FILE tag_server tag_dest taille_envoyer trame_fichier
 
 	/* implémentation de jeu */
 	C -> S : JEU id_jeu protocole_jeu
@@ -118,24 +119,22 @@ tag_server.tag_chan	: 15.250, 3.30, 1.1, ...
 
 *******************************
 COMMENT KON STOCK LES CONVERSATIONS
-Méthode syncro
-Méthode envoi aux non hors-ligne
 *******************************
 
-Les tags channels sont identifiés par leur premier bit commençant par 0 (sujet a changement)
-
-A ajouter :
-	envoi de fichiers
-	ajout de plusieurs mini jeux (roulette, jeux de cartes/casino, )
-
-	*******************************
-	PRIVACY - PGP
-	IMAGE
-	GIF
+*******************************
+LES BASES :
+	MENTIONS DE GENS (CÔTÉ CLIENT UNIQUEMENT)
 	FICHIERS
+	IMAGES
+
+LES PLUS :
+	GIF
+	MESSAGE VOCAL
+
+LES PLUS PLUS (ON SE MET GRAVE BIEN) :
+	PRIVACY - PGP
 	TELECHARGEMENT PAR P2P
-	SON
 	CHAT VOCAL / WEBCAM / VIDÉO-CONF
 	PARTAGE D'ÉCRAN
-	MENTIONS DE GENS
-	*******************************
+	AJOUT DE MINI-JEUX (roulette, jeux de cartes/casino, ...)
+*******************************
