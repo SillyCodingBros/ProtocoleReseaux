@@ -76,8 +76,9 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	C -> S : JOIN tag_server tag_chan
 	C -> S : JOIN 0 tag_usr_src
 
-	/* notification de l'arrivé d'un nouveau membre dans le channel */
-	S -> C : JOIN 0 tag_usr_dest
+	/* notification de l'arrivé d'un nouveau membre dans le channel / demande d'ami accepté */
+	S -> C : JOIN tag_server tag_chan 0 tag_usr_dest
+	S -> C : JOIN 0 tag_usr_src 0 tag_usr_dest
 
 	/* changer de mot de passe */
 	C -> S : PSW password new_password
