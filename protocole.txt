@@ -73,6 +73,7 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : INV tag_server tag_chan nom_chan 0 tag_usr_src
 
 	/* accepter l'invitation channel/ami */
+	/* il faudra également utiliser cette commande si notre demande est accepté*/
 	C -> S : JOIN tag_server tag_chan
 	C -> S : JOIN 0 tag_usr_src
 
