@@ -18,9 +18,9 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 §§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 
 	/* création d'un nouveau compte/channel/serveur */
-	C -> S : NEW pseudo password
-	C -> S : NEW tag_server chan_name
-	C -> S : NEW server_name
+	C -> S : NEW USR pseudo password
+	C -> S : NEW CHAN tag_server chan_name
+	C -> S : NEW SERV server_name
 
 	/* connexion à un compte */
 	C -> S : IAM pseudo password
