@@ -28,27 +28,30 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	/* réponse à une connexion/création par le tag du client/channel/serveur */
 	S -> C : TAG 0 tag_usr
 	S -> C : TAG tag_server tag_chan
-	S -> C : TAG tag_server
+	S -> C : TAG tag_server 0
 
 	/* informer tout les connectés de l'arrivé de pseudo/tag_usr */
-	/* envoyer à l'arrivant les associations pseudo/tag_usr des connectés */
-	S -> C : ADD 0 tag_usr pseudo
+	/* envoyer à l'arrivant les associations pseudo/tag_usr de tout le monde */
+	S -> C : ADD ON 0 tag_usr pseudo
+	S -> C : ADD OFF 0 tag_usr pseudo
 
-	/* informer le créateur du tag_chan/tag_server créé */
-	S -> C : ADD tag_server tag_chan chan_name
-	S -> C : ADD tag_server server_name
-
-	/* informer tout le monde que $(tag) est déconnecté/supprimé */
-	S -> C : BYE 0 tag_usr
-	S -> C : BYE tag_server tag_chan
-	S -> C : BYE tag_server
-
-	/* le créateur du channel/server le supprime */
-	C -> S : BYE tag_server tag_chan
-	C -> S : BYE tag_server
-
-	/* se déconnecter */
+	/* se déconnecter / quitter un channel/serveur */
 	C -> S : BYE
+	C -> S : BYE tag_server tag_chan
+	C -> S : BYE tag_server 0
+
+	/* informer tout le monde que $(tag) est déconnecté / a quitté le channel/serveur */
+	S -> C : BYE 0 tag_usr
+	S -> C : BYE 0 tag_usr tag_server tag_chan
+	S -> C : BYE 0 tag_usr tag_server 0
+
+	/* un modérateur du channel/serveur le supprime */
+	C -> S : DEL tag_server tag_chan
+	C -> S : DEL tag_server 0
+
+	/* informer tout le monde que $(tag) est supprimé */
+	S -> C : DEL tag_server tag_chan
+	S -> C : DEL tag_server 0
 
 	/* envoi la liste d'ami du compte associé au premier tag_usr */
 	S -> C : GRP 0 tag_usr 0 tag_usr 0 tag_usr 0 tag_usr ...
@@ -65,12 +68,12 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : MSG tag_server tag_chan_src message
 
 	/* envoi demande d'ami / invitation à un channel */
-	C -> S : INV 0 tag_usr_src 0 tag_usr_dest
-	C -> S : INV tag_server tag_chan 0 tag_usr_dest
+	C -> S : INV 0 tag_usr_dest
+	C -> S : INV 0 tag_usr_dest tag_server tag_chan
 
 	/* réception demande d'ami / invitation à un channel */
 	S -> C : INV 0 tag_usr_src
-	S -> C : INV tag_server tag_chan nom_chan 0 tag_usr_src
+	S -> C : INV 0 tag_usr_src tag_server tag_chan nom_serv nom_chan
 
 	/* accepter l'invitation channel/ami */
 	C -> S : JOIN tag_server tag_chan
@@ -82,19 +85,18 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 
 	/* changer de mot de passe */
 	C -> S : PSW password new_password
-	S -> C : PSW new_password
 
 	/* changer le pseudo d'un client */
-	C -> S : PSD password new_pseudo
+	C -> S : PSD new_pseudo password
 
-	/* changer le nom d'un channel/serveur par créateur uniquement */
-	C -> S : RENAME tag_server tag_chan new_name
-	C -> S : RENAME tag_server new_name
+	/* changer le nom d'un channel/serveur par un modérateur uniquement */
+	C -> S : RENAME new_name tag_server tag_chan
+	C -> S : RENAME new_name tag_server
 
 	/* notification à tous les membres du changement de nom d'un channel/serveur/client */
-	S -> C : RENAME tag_server tag_chan new_name
-	S -> C : RENAME tag_server new_name
-	S -> C : RENAME 0 tag_usr new_pseudo
+	S -> C : RENAME new_name tag_server tag_chan
+	S -> C : RENAME new_name tag_server
+	S -> C : RENAME new_pseudo 0 tag_usr
 
 	/* test de présence toute les 30 sec */
 	S -> C : TIC
