@@ -35,9 +35,6 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : ADD ON 0 tag_usr pseudo
 	S -> C : ADD OFF 0 tag_usr pseudo
 
-	/* notification de l'arrivé en ligne d'une personne à tout client en ligne */
-	S -> C : HI 0 tag_usr
-
 	/* se déconnecter / quitter un channel/serveur */
 	C -> S : BYE
 	C -> S : BYE tag_server tag_chan
