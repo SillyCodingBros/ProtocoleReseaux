@@ -49,7 +49,7 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	C -> S : DEL tag_server tag_chan
 	C -> S : DEL tag_server 0
 
-	/* informer tout le monde que $(tag) est supprimé */
+	/* informer tout le monde que channel/serveur est supprimé */
 	S -> C : DEL tag_server tag_chan
 	S -> C : DEL tag_server 0
 
