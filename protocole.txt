@@ -40,7 +40,8 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	C -> S : BYE tag_server tag_chan
 	C -> S : BYE tag_server 0
 
-	/* informer tout le monde que $(tag) est déconnecté / a quitté le channel/serveur */
+	/* informer soi-même/tout le monde que tag_usr est déconnecté / a quitté le channel/serveur */
+	S -> C : BYE
 	S -> C : BYE 0 tag_usr
 	S -> C : BYE 0 tag_usr tag_server tag_chan
 	S -> C : BYE 0 tag_usr tag_server 0
