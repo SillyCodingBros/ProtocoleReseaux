@@ -104,7 +104,6 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 
 	/* changer le pseudo d'un client */
 	C -> S : PSD new_pseudo password
-	S -> C : PSD new_pseudo
 
 	/* changer le nom d'un channel/serveur par un modérateur uniquement */
 	C -> S : RENAME new_name tag_server tag_chan
