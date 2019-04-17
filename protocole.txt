@@ -136,15 +136,17 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	C -> S : FILE tag_server tag_dest taille_envoyer trame_fichier
 	S -> C : FILE tag_server tag_dest taille_envoyer trame_fichier
 
-	/* piste pour la struct d'une save de messages */
+	/* struct d'une save de messages */
 	/* métadonnées du message */
-	# nom date heure ...
+	# 0 tag JJ MM AA HH MM SS
 	/* contenu du message */
 	> message
 
-	EX:
-	# 0 15 10-04-19 13-42-17
-	> salut les gens ! :D
+			EX:
+			# 0 15 10 04 19 13 42 17
+			> salut les gens ! :D
+			# 0 2 10 04 19 13 45 03
+			> salut gros !
 
 	/* implémentation de jeu */
 	C -> S : JEU id_jeu protocole_jeu
