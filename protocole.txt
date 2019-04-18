@@ -114,27 +114,23 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : RENAME new_name tag_server
 	S -> C : RENAME new_pseudo 0 tag_usr
 
-	/* test de présence toute les 30 sec */
-	S -> C : TIC
-	C -> S : TOC
-
 	/* signal une erreur */
 	S -> C : ERR message
 
 	/* arrêter le serveur */
 	S -> S : EXT
 
-	/* commande pour informer qu'un fichier va être transmit */
-	C -> S : NEWFILE nom_fichier taille_fichier tag_server tag_dest
-	S -> C : NEWFILE nom_fichier taille_fichier tag_server tag_dest
-
 	/* demander l'historique des messages privés/channels */
 	C -> S : GET 0 tag_usr
 	C -> S : GET tag_server tag_channel
 
+	/* commande pour informer qu'un fichier va être transmit */
+	C -> S : NEWFILE nom_fichier taille_fichier tag_server tag_dest
+	S -> C : NEWFILE nom_fichier taille_fichier tag_server tag_dest
+
 	/* commande pour envoyer les trames du fichier qu'on a dit qu'on enverrait  */
-	C -> S : FILE tag_server tag_dest taille_envoyer trame_fichier
-	S -> C : FILE tag_server tag_dest taille_envoyer trame_fichier
+	C -> S : FILE tag_server tag_dest taille_trame trame_binaire_fichier
+	S -> C : FILE tag_server tag_dest taille_trame trame_binaire_fichier
 
 	/* struct d'une save de messages */
 	/* métadonnées du message */
