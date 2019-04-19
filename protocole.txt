@@ -155,11 +155,14 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : ENDFILE OK
 
 	/* nofication aux membres d'une conversation de l'envoi d'un fichier */
-	/* pas nécessaire de notifier l'envoyeur il reçoit ENDFILE */
+	/* pas nécessaire (mais pratique) de notifier l'envoyeur il reçoit ENDFILE */
 	/* ce notification déclanchera un GET du client destinataire */
 	/* 'nom_fichier' doit être unique à la conversation */
 	S -> C : FILESENT 0 tag_usr_src nom_fichier
 	S -> C : FILESENT 0 tag_usr_src tag_server tag_chan_dest nom_fichier
+
+	/* notification à l'envoyeur de l'envoi de son fichier à une personne */
+	S -> C : FILESENT 0 tag_usr_src 0 tag_usr_dest nom_fichier
 
 	/* struct d'une save de messages */
 	/* métadonnées du message */
