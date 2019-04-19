@@ -139,8 +139,8 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 	S -> C : NEWFILE OK
 
 	/* commande pour envoyer les trames du fichier qu'on a dit qu'on enverrait  */
-	C -> S : FILE tag_server tag_dest trame_binaire_fichier
-	S -> C : FILE tag_server tag_dest trame_binaire_fichier
+	C -> S : FILE tag_server tag_dest nom_fichier_tmp trame_binaire_fichier
+	S -> C : FILE tag_server tag_dest nom_fichier trame_binaire_fichier
 
 	/* nofication d'acceptation du FILE par le serveur */
 	S -> C : FILE OK
