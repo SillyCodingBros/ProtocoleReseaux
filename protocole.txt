@@ -167,18 +167,18 @@ tag_server tag_chan	: 15 250, 3 30, 1 1, ...
 
 	/* struct d'une save de messages */
 	/* métadonnées du message */
-	# 0 tag JJ MM AA HH MM SS
+	# 0 tag (J)J (M)M (A)A (H)H (M)M (S)S
 	/* contenu du message */
 	> message
 	/* nom du fichier unique donné par le serveur*/
 	* nom_fichier
 
 			EX:
-			# 0 15 10 04 19 13 42 17
+			# 0 15 10 (0)4 19 13 42 17
 			> salut les gens ! :D
-			# 0 2 10 04 19 13 45 03
+			# 0 2 10 (0)4 19 13 45 (0)3
 			> salut gros !
-			# 0 15 10 04 19 15 02 37
+			# 0 15 10 (0)4 19 15 (0)2 37
 			* 135.png
 
 	/* implémentation de jeu */
