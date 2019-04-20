@@ -138,7 +138,7 @@ le buffer de réception et d'envoi doit être de taille 4096
 	/* commande pour informer qu'un fichier va être transmit */
 	/* 'nom_fichier_tmp' est un identifiant temporaire */
 	/* 'nom_fichier' doit être unique à la conversation si il s'agit d'une sauvegarde le nom_fichier est : save.txt */
-	/* cela ne veut pas focément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
+	/* cela ne veut pas forcément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
 	C -> S : NEWFILE tag_server tag_dest nom_fichier_tmp taille_fichier_bytes
 	S -> C : NEWFILE tag_server tag_dest nom_fichier taille_fichier_bytes
 
@@ -148,7 +148,7 @@ le buffer de réception et d'envoi doit être de taille 4096
 	/* commande pour envoyer les trames du fichier qu'on a dit qu'on enverrait  */
 	/* 'nom_fichier_tmp' est un identifiant temporaire */
 	/* 'nom_fichier' doit être unique à la conversation si il s'agit d'une sauvegarde le nom_fichier est : save.txt */
-	/* cela ne veut pas focément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
+	/* cela ne veut pas forcément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
 	/* les trame_binaire_fichier doivent être encodées en base64 */
 	C -> S : FILE tag_server tag_dest nom_fichier_tmp trame_binaire_fichier
 	S -> C : FILE tag_server tag_dest nom_fichier trame_binaire_fichier
@@ -159,7 +159,7 @@ le buffer de réception et d'envoi doit être de taille 4096
 	/* notification de fin d'envoi du fichier */
 	/* 'nom_fichier_tmp' est un identifiant temporaire */
 	/* 'nom_fichier' doit être unique à la conversation si il s'agit d'une sauvegarde le nom_fichier est : save.txt */
-	/* cela ne veut pas focément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
+	/* cela ne veut pas forcément dire que l'on doit enregistrer le fichier de sauvegarde sous ce nom */
 	C -> S : ENDFILE tag_server tag_dest nom_fichier_tmp taille_fichier_bytes
 	S -> C : ENDFILE tag_server tag_dest nom_fichier taille_fichier_bytes
 
