@@ -72,7 +72,7 @@ les cmd doivent se finir par un '\r\n'
 	C -> S : MSG tag_server tag_chan_dest message
 
 	/* notification au.x destinataire.s du message d'une personne/channel */
-	S -> C : MSG 0 tag_usr_src message
+	S -> C : MSG 0 tag_usr_src 0 tag_usr_dest message
 	S -> C : MSG 0 tag_usr_src tag_server tag_chan_src message
 
 	/* notification à l'envoyeur de l'envoi de son message à une personne/channel */
