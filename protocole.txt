@@ -34,8 +34,8 @@ les cmd doivent se finir par un '\r\n'
 
 	/* réponse à une connexion/création par le tag du client/channel/serveur */
 	S -> C : TAG 0 tag_usr
-	S -> C : TAG tag_server tag_chan
-	S -> C : TAG tag_server 0
+	S -> C : TAG tag_server tag_chan chan_name
+	S -> C : TAG tag_server 0 server_name
 
 	/* informer tout les connectés de l'arrivé de pseudo/tag_usr */
 	/* envoyer à l'arrivant les associations pseudo/tag_usr et statut de tout le monde */
